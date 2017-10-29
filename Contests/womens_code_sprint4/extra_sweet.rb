@@ -10,8 +10,9 @@ def get_sweetness_amount(
     portion:
   )
   # Calculate sum of the portion
-  result = (portion[0]..portion[1]).inject(0, &:+)
+  result = @sweet_array[@sweet_array.find_index(portion[0])..@sweet_array.find_index(portion[1])].inject(0, &:+)
   temp_index = @sweet_array.find_index(portion[0])
+  return 0 if @sweet_array.empty?
   # Now remove the portion from the array
   @sweet_array -= @sweet_array[@sweet_array.find_index(portion[0])..@sweet_array.find_index(portion[1])]
   2.times { result += @sweet_array.delete_at(temp_index-1) if @sweet_array[temp_index-1] }
