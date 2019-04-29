@@ -33,8 +33,11 @@ def determine_append_delete_is_possible(string1, string2, operations):
         Bool - 'Yes'/'No'
     """
     matching_string = get_matching_substring(string1, string2)
-    string1_len = len(string1.replace(matching_string, ''))
-    string2_len = len(string2.replace(matching_string, ''))
+    string1_len = len(string1) - len(matching_string)
+    string2_len = len(string2) - len(matching_string)
+    if string1_len == 0 and string2_len != 0:
+        if (operations - string2_len) % 2 != 0:
+            return 'No'
     if (string1_len + string2_len) == operations \
             or (string1_len + string2_len + 2) <= operations:
         return 'Yes'
@@ -43,9 +46,9 @@ def determine_append_delete_is_possible(string1, string2, operations):
 
 
 ##########
-string1 = raw_input()
-string2 = raw_input()
-operations = int(raw_input())
+string1 = input()
+string2 = input()
+operations = int(input())
 
-print determine_append_delete_is_possible(string1, string2, operations)
+print(determine_append_delete_is_possible(string1, string2, operations))
 ##########
