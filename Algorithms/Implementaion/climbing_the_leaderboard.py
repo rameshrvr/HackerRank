@@ -1,37 +1,53 @@
 
 
 def calc_alice_rank(
-        score_board, alice_score
+    score_board, alice_score, alice_games
 ):
-    """
-    Method to calculate alice rank after every game
-    """
-    sorted_score_board = list(reversed(list(sorted(set(score_board)))))
-    score_board_size = len(sorted_score_board)
-    for score in alice_score:
-        if score >= sorted_score_board[0]:
-            print '{}'.format(1)
+    score_board_hash = {}
+    for score in score_board:
+        if score in score_board_hash:
+            continue
         else:
-            for index in xrange(0, score_board_size - 1):
-                if index == score_board_size - 1:
-                    print '{}'.format(index + 2)
-                    break
-                elif sorted_score_board[index] > score >= sorted_score_board[index + 1]:
-                    print '{}'.format(index + 2)
-                    break
-                elif sorted_score_board[index] >= score >= sorted_score_board[index + 1]:
-                    print '{}'.format(index + 1)
-                    break
-                elif sorted_score_board[score_board_size - 1] > score:
-                    print '{}'.format(score_board_size + 1)
-                    break
+            score_board_hash[score] = 1
+    score_board = list(score_board_hash.keys())
+
+    alice_score_hash = {}
+    for score in alice_score:
+        if score in alice_score_hash:
+            alice_score_hash[score] += 1
+        else:
+            alice_score_hash[score] = 1
+
+    alice_rank_counter = 0
+    for index in reversed(range(len(score_board))):
+        if alice_rank_counter >= alice_games:
+            break
+        while alice_score[alice_rank_counter] <= score_board[index]:
+            current_score = alice_score[alice_rank_counter]
+            if score_board[index] == current_score:
+                for _ in range(alice_score_hash[current_score]):
+                    print(index + 1)
+                alice_rank_counter += alice_score_hash[current_score]
+            elif score_board[index] > current_score:
+                for _ in range(alice_score_hash[current_score]):
+                    print(index + 2)
+                alice_rank_counter += alice_score_hash[current_score]
+            elif index == 0 and current_score > score_board[index]:
+                print(1)
+                alice_rank_counter += 1
+            if alice_rank_counter >= alice_games:
+                break
+
+        if index == 0:
+            for _ in range(alice_games - alice_rank_counter):
+                print(1)
 
 
 ############
-score_board_size = int(raw_input())
-score_board = map(int, raw_input().rstrip().split(' '))
-alice_games = int(raw_input())
-alice_score = map(int, raw_input().rstrip().split(' '))
+score_board_size = int(input())
+score_board = list(map(int, input().split()))
+alice_games = int(input())
+alice_score = list(map(int, input().split()))
 
-calc_alice_rank(score_board, alice_score)
+calc_alice_rank(score_board, alice_score, alice_games)
 ############

@@ -1,37 +1,41 @@
 
 
-def calc_max_distance(array, no_of_cities):
-    distance_array = []
-    for city in xrange(0, no_of_cities):
-        if city in array:
-            pass
-        else:
-            distance_array.append(
-                calc_nearby_station(
-                    array=array, city=city
-                )
-            )
-
-    return 0 if not distance_array else max(distance_array)
-
-
-def calc_nearby_station(array, city):
-    low = city - 1
-    high = city + 1
-    while True:
-        if low in array:
-            return city - low
-        elif high in array:
-            return high - city
-        else:
-            low -= 1
-            high += 1
+def calc_max_distance(
+    space_station_details, total_space_station, total_cities
+):
+    max_distance = 0
+    space_station_details.sort()
+    for index in range(total_space_station - 1):
+        distance = int(
+            (space_station_details[index + 1] -
+             space_station_details[index]) / 2
+        )
+        if distance > max_distance:
+            max_distance = distance
+    # Distance of last city from space station
+    distance = int(
+        ((total_cities - 1) -
+         space_station_details[total_space_station - 1])
+    )
+    if distance > max_distance:
+        max_distance = distance
+    # Distance of first city from space station
+    distance = int((space_station_details[0] - 0))
+    if distance > max_distance:
+        max_distance = distance
+    return max_distance
 
 
-my_input = map(int, raw_input().rstrip().split(' '))
-array = map(int, raw_input().split(' '))
+details = list(map(int, input().split()))
+total_cities, total_space_station = details[0], details[1]
+
+space_station_details = list(map(int, input().split()))
 
 
-print calc_max_distance(
-    array=array, no_of_cities=my_input[0]
+print(
+    calc_max_distance(
+        space_station_details=space_station_details,
+        total_space_station=total_space_station,
+        total_cities=total_cities
+    )
 )
