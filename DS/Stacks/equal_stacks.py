@@ -21,14 +21,11 @@ def get_equal_stacks_heights(
     )
     while (queue1 != [] and queue2 != [] and queue3 != []):
         if stack_heights[0] > max_height:
-            stack1_elem = queue1.popleft()
-            stack_heights[0] -= stack1_elem
+            stack_heights[0] -= queue1.popleft()
         if stack_heights[1] > max_height:
-            stack2_elem = queue2.popleft()
-            stack_heights[1] -= stack2_elem
+            stack_heights[1] -= queue2.popleft()
         if stack_heights[2] > max_height:
-            stack3_elem = queue3.popleft()
-            stack_heights[2] -= stack3_elem
+            stack_heights[2] -= queue3.popleft()
         max_height = get_smallest(
             stack_heights[0], stack_heights[1], stack_heights[2]
         )
