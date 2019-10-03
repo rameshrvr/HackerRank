@@ -11,6 +11,7 @@ def max_possible_score(stack1, stack2, X):
             break
         if queue1[0] > queue2[0]:
             score = queue2.popleft()
+            print("Queue2: %s" % score)
             if (overall_sum + score) <= X:
                 overall_sum += score
                 possible_score += 1
@@ -18,11 +19,14 @@ def max_possible_score(stack1, stack2, X):
                 break
         else:
             score = queue1.popleft()
+            print("Queue1: %s" % score)
             if (overall_sum + score) <= X:
                 overall_sum += score
                 possible_score += 1
             else:
                 break
+    print(queue1)
+    print(queue2)
     return possible_score
 
 

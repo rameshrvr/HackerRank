@@ -21,6 +21,8 @@ def check_is_beautiful(data_str):
             return 'NO'
         start = end
         end += digit_size
+    if len(data_str) != end:
+        return 'NO'
     return 'YES {}'.format(data_str[:start_index])
 
 
